@@ -5,7 +5,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('dashboard/index.html')
+
+@app.route('/sobre')
+def sobre():
+    return render_template('dashboard/sobre.html')
+
+@app.route('/aluno')
+def lista_aluno():
+    return render_template('aluno/lista.html')
 
 
 if __name__ == '__main__':
