@@ -36,11 +36,10 @@ def listar_turma():
     DB_PATH = "banco_escola.db"
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute('SELECT id.aluno, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id')
+    cursor.execute('SELECT turma.id, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id')
     lista = cursor.fetchall()
     return render_template('turma/lista.html', lista=lista)
 
-@app.route('/ajuda')
 
 @app.route('/ajuda')
 def ajuda():
