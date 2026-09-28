@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import sqlite3
+from dao.db_config import get_connection
 
 app = Flask(__name__)
 
@@ -15,8 +15,7 @@ def sobre():
 @app.route('/aluno')
 
 def listar_aluno():
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT id, nome, idade, cidade FROM aluno')
     lista = cursor.fetchall()
@@ -24,8 +23,7 @@ def listar_aluno():
 
 @app.route('/professor')
 def lista_professor():
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT id, nome, disciplina FROM professor')
     lista = cursor.fetchall()
@@ -33,8 +31,7 @@ def lista_professor():
 
 @app.route('/turma')
 def listar_turma():
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT turma.id, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id')
     lista = cursor.fetchall()
