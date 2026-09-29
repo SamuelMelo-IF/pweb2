@@ -1,5 +1,8 @@
 from flask import Flask, render_template
 from dao.db_config import get_connection
+from dao.aluno_dao import AlunoDAO
+from dao.professor_dao import ProfessorDAO
+from dao.turma_dao import TurmaDAO
 
 app = Flask(__name__)
 
@@ -15,26 +18,20 @@ def sobre():
 @app.route('/aluno')
 
 def listar_aluno():
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT id, nome, idade, cidade FROM aluno')
-    lista = cursor.fetchall()
+    dao = AlunoDAO()
+    lista = dao.listar()
     return render_template('aluno/lista.html', lista=lista)
 
 @app.route('/professor')
 def lista_professor():
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT id, nome, disciplina FROM professor')
-    lista = cursor.fetchall()
+    dao = ProfessorDAO()
+    lista = dao.listar()
     return render_template('professor/lista.html',lista=lista)
 
 @app.route('/turma')
 def listar_turma():
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT turma.id, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id')
-    lista = cursor.fetchall()
+    dao = TurmaDAO()
+    lista = dao.listar()
     return render_template('turma/lista.html', lista=lista)
 
 
