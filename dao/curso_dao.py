@@ -9,5 +9,4 @@ class CursoDAO:
         cursor = conn.cursor()
         cursor.execute(self.sqlSelect)
         lista = cursor.fetchall()
-        conn.close()
         return lista
