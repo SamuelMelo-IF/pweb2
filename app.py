@@ -61,14 +61,19 @@ def login():
     dados = f"Usuário: {usuario}, Senha: {senha}, E-mail: {email}"
     return render_template('saudacao/saudacao.html', valor_recebido=dados)
 
-@app.route('/formulario', methods=['POST'])
-def formulario():
+
+@app.route('/formulario/enviar', methods=['POST'])
+def enviar_formulario():
     nome = request.form['nome']
     data_nascimento = request.form['data_nascimento']
     cpf = request.form['cpf']
     nome_mae = request.form['nome_mae']
     dados = f"Nome: {nome}, Data de Nascimento: {data_nascimento}, CPF: {cpf}, Nome da Mãe: {nome_mae}"
-    return render_template('saudacao/saudacao.html', valor_recebido=dados)
+    return render_template('desafio/resultado.html', valor_recebido=dados)
+
+@app.route('/formulario')
+def formulario():
+    return render_template('desafio/formulario.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
