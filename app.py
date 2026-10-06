@@ -34,6 +34,12 @@ def listar_turma():
     lista = dao.listar()
     return render_template('turma/lista.html', lista=lista)
 
+@app.route('/curso')
+def listar_curso():
+    dao = CursoDAO()
+    lista = dao.listar()
+    return render_template('curso/lista.html', lista=lista)
+
 @app.route('/ajuda')
 def ajuda():
     return render_template('ajuda.html')
