@@ -125,10 +125,9 @@ def form_curso():
 @app.route('/curso/salvar/', methods=['POST'])
 def salvar_curso(id=None):
     nome = request.form['nome']
-    idade = request.form['idade']
-    cidade = request.form['cidade']
+    duracao = request.form['duracao']
     dao = CursoDAO()
-    resultado = dao.salvar(id, nome, idade, cidade)
+    resultado = dao.salvar(id, nome, duracao)
     if resultado["status"] == "ok":
         flash("Curso salvo com sucesso!", "success")
     else:
