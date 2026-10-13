@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, flash
 from dao.db_config import get_connection
 from dao.aluno_dao import AlunoDAO
 from dao.professor_dao import ProfessorDAO
@@ -82,6 +82,11 @@ def enviar_formulario():
 @app.route('/formulario')
 def formulario():
     return render_template('desafios/formulario.html')
+
+
+@app.route('/aluno/form')
+def form_aluno():
+    return render_template('aluno/form.html', aluno=None)
 
 if __name__ == '__main__':
     app.run(debug=True)
