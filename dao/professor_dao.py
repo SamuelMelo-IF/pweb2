@@ -11,11 +11,11 @@ class ProfessorDAO:
         lista = cursor.fetchall()
         return lista
 
-    def salvar(self, id, nome, idade, cidade):
+    def salvar(self, id, nome, disciplina):
             conn = get_connection()
             cursor = conn.cursor()
             try:
-                cursor.execute('INSERT INTO professor (nome, idade, cidade) VALUES (%s, %s, %s)', (nome, idade, cidade))
+                cursor.execute('INSERT INTO professor (nome, disciplina) VALUES (%s, %s)', (nome, disciplina))
                 conn.commit()
                 return {"status": "ok"}
             except Exception as e:

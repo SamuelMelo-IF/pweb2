@@ -108,10 +108,9 @@ def form_professor():
 @app.route('/professor/salvar/', methods=['POST'])
 def salvar_professor(id=None):
     nome = request.form['nome']
-    idade = request.form['idade']
-    cidade = request.form['cidade']
+    disciplina = request.form['disciplina']
     dao = ProfessorDAO()
-    resultado = dao.salvar(id, nome, idade, cidade)
+    resultado = dao.salvar(id, nome, disciplina)
     if resultado["status"] == "ok":
         flash("Professor salvo com sucesso!", "success")
     else:
