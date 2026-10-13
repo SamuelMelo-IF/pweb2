@@ -88,5 +88,9 @@ def formulario():
 def form_aluno():
     return render_template('aluno/form.html', aluno=None)
 
+@app.route('/aluno/salvar/', methods=['POST']) # Inserção
+def salvar_aluno(id=None):
+    return redirect('/aluno')
+
 if __name__ == '__main__':
     app.run(debug=True)
