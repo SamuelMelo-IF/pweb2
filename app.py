@@ -101,5 +101,39 @@ def salvar_aluno(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/aluno')
 
+@app.route('/professor/form')
+def form_professor():
+    return render_template('professor/form.html', professor=None)
+
+@app.route('/professor/salvar/', methods=['POST'])
+def salvar_professor(id=None):
+    nome = request.form['nome']
+    idade = request.form['idade']
+    cidade = request.form['cidade']
+    dao = ProfessorDAO()
+    resultado = dao.salvar(id, nome, idade, cidade)
+    if resultado["status"] == "ok":
+        flash("Professor salvo com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    return redirect('/professor')
+
+@app.route('/curso/form')
+def form_curso():
+    return render_template('curso/form.html', curso=None)
+
+@app.route('/curso/salvar/', methods=['POST'])
+def salvar_curso(id=None):
+    nome = request.form['nome']
+    idade = request.form['idade']
+    cidade = request.form['cidade']
+    dao = CursoDAO()
+    resultado = dao.salvar(id, nome, idade, cidade)
+    if resultado["status"] == "ok":
+        flash("Curso salvo com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    return redirect('/curso')
+
 if __name__ == '__main__':
     app.run(debug=True)
