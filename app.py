@@ -146,10 +146,12 @@ def form_turma():
 @app.route('/turma/salvar/', methods=['POST'])
 def salvar_turma(id=None):
     semestre = request.form['semestre']
-    curso = request.form['curso']
-    professor = request.form['professor']
+    curso_id = request.form['curso_id']      # Alterado de 'curso' para 'curso_id'
+    professor_id = request.form['professor_id']  # Alterado de 'professor' para 'professor_id'
+    
     dao = TurmaDAO()
-    resultado = dao.salvar(id, semestre, curso, professor) # Ajuste conforme os parâmetros que o seu DAO espera
+    resultado = dao.salvar(id, semestre, curso_id, professor_id)
+    
     if resultado["status"] == "ok":
         flash("Turma salva com sucesso!", "success")
     else:
