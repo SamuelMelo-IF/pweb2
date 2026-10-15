@@ -133,5 +133,22 @@ def salvar_curso(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/curso')
 
+@app.route('/turma/form')
+def form_turma():
+    return render_template('turma/form.html', turma=None)
+
+@app.route('/turma/salvar/', methods=['POST'])
+def salvar_turma(id=None):
+    semestre = request.form['semestre']
+    curso_id = request.form['curso_id']
+    professor_id = request.form['professor_id']
+    dao = TurmaDAO()
+    resultado = dao.salvar(id, semestre, curso_id, professor_id)
+    if resultado["status"] == "ok":
+        flash("Turma salva com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+    return redirect('/turma')
+
 if __name__ == '__main__':
     app.run(debug=True)
