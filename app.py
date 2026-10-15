@@ -135,7 +135,13 @@ def salvar_curso(id=None):
 
 @app.route('/turma/form')
 def form_turma():
-    return render_template('turma/form.html', turma=None)
+    curso_dao = CursoDAO()
+    professor_dao = ProfessorDAO()
+    
+    cursos = curso_dao.listar()
+    professores = professor_dao.listar()
+    
+    return render_template('turma/form.html', turma=None, cursos=cursos, professores=professores)
 
 @app.route('/turma/salvar/', methods=['POST'])
 def salvar_turma(id=None):
