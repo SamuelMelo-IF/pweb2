@@ -15,32 +15,16 @@
           <input type="text" class="form-control" id="semestre" name="semestre" value="{{ turma[1] }}" required>
         </div>
   
-        <!-- Curso -->
+        <!-- Curso (Digitado manualmente) -->
         <div class="mb-3">
-          <label for="curso_id" class="form-label">Curso</label>
-          <select class="form-control" id="curso_id" name="curso_id" required>
-            <option value="">Selecione um curso</option>
-            {% for curso in cursos %}
-              <option value="{{ curso[0] }}" {% if turma[2] == curso[0] %}selected{% endif %}>{{ curso[1] }}</option>
-            {% endfor %}
-          </select>
+          <label for="curso" class="form-label">Curso</label>
+          <input type="text" class="form-control" id="curso" name="curso" value="{{ turma[2] }}" required>
         </div>
   
-        <!-- Professor -->
+        <!-- Professor (Digitado manualmente) -->
         <div class="mb-3">
-          <label for="professor_id" class="form-label">Professor</label>
-          <select class="form-control" id="professor_id" name="professor_id" required>
-            <option value="">Selecione um professor</option>
-            {% for professor in professores %}
-              <option value="{{ professor[0] }}" {% if turma[3] == professor[0] %}selected{% endif %}>{{ professor[1] }}</option>
-            {% endfor %}
-          </select>
-        </div>
-  
-        <!-- Cidade -->
-        <div class="mb-3">
-          <label for="cidade" class="form-label">Cidade</label>
-          <input type="text" class="form-control" id="cidade" name="cidade" value="{{ turma[4] }}" required>
+          <label for="professor" class="form-label">Professor</label>
+          <input type="text" class="form-control" id="professor" name="professor" value="{{ turma[3] }}" required>
         </div>
   
         <!-- Botões -->
