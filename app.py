@@ -208,7 +208,7 @@ def salvar_turma(id=None):
     resultado = dao.salvar(id, semestre, curso_id, professor_id)
     
     if resultado["status"] == "ok":
-        flash("Turma salva com sucesso!")
+        flash("Turma salva com sucesso!", "success")
     else:
         flash(resultado["mensagem"], "danger")
     return redirect('/turma')
