@@ -22,3 +22,11 @@ class AlunoDAO:
             return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
         finally:
             conn.close()
+
+    def buscar_por_id(self, id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, nome, idade, cidade FROM aluno WHERE id=%s', (id,))
+        registro = cursor.fetchone() # retorna o registro selecionado
+        conn.close()
+        return registro

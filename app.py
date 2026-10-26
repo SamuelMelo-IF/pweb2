@@ -101,6 +101,13 @@ def salvar_aluno(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/aluno')
 
+@app.route('/aluno/editar/<int:id>')
+def editar_aluno(id):
+    dao = AlunoDAO()
+    aluno = dao.buscar_por_id(id)
+    return render_template('aluno/form.html', aluno=aluno)
+
+
 @app.route('/professor/form')
 def form_professor():
     return render_template('professor/form.html', professor=None)
