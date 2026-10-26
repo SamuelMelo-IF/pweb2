@@ -2,7 +2,7 @@ from dao.db_config import get_connection
 
 class TurmaDAO:
     
-    sqlSelect = 'SELECT turma.id, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id'
+    sqlSelect = 'SELECT turma.id, semestre, nome_curso, professor.nome FROM turma JOIN curso ON curso.id = turma.curso_id JOIN professor ON professor.id = turma.professor_id ORDER BY turma.id ASC'
 
     def listar(self):
         conn = get_connection()
