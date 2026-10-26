@@ -113,7 +113,7 @@ def remover_aluno(id):
     dao = AlunoDAO()
     resultado = dao.remover (id)
     if resultado ["status"] == "ok":
-        flash("Registro removido com sucesso! ucesso!", "success")
+        flash("Aluno excluído com sucesso!", "danger")
     else:
         flash (resultado ["mensagem"], "danger")
     return redirect('/aluno')
@@ -171,7 +171,7 @@ def salvar_turma(id=None):
     resultado = dao.salvar(id, semestre, curso_id, professor_id)
     
     if resultado["status"] == "ok":
-        flash("Turma salva com sucesso!", "success")
+        flash("Turma salva com sucesso!")
     else:
         flash(resultado["mensagem"], "danger")
     return redirect('/turma')
