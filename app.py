@@ -213,11 +213,19 @@ def salvar_turma(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/turma')
 
+
 @app.route('/turma/editar/<int:id>')
 def editar_turma(id):
     dao = TurmaDAO()
     turma = dao.buscar_por_id(id)
-    return render_template('turma/form.html', turma=turma)
+
+    curso_dao = CursoDAO()
+    professor_dao = ProfessorDAO()
+
+    cursos = curso_dao.listar()
+    professores = professor_dao.listar()
+
+    return render_template( 'turma/form.html', turma=turma, cursos=cursos, professores=professores)
 
 @app.route("/turma/remover/<int:id>")
 def remover_turma(id):
