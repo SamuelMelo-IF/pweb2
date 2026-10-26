@@ -124,6 +124,7 @@ def form_professor():
     return render_template('professor/form.html', professor=None)
 
 @app.route('/professor/salvar/', methods=['POST'])
+@app.route('/professor/salvar/<int:id>', methods=['POST'])
 def salvar_professor(id=None):
     nome = request.form['nome']
     disciplina = request.form['disciplina']
@@ -157,6 +158,7 @@ def form_curso():
     return render_template('curso/form.html', curso=None)
 
 @app.route('/curso/salvar/', methods=['POST'])
+@app.route('/curso/salvar/<int:id>', methods=['POST'])
 def salvar_curso(id=None):
     nome = request.form['nome']
     duracao = request.form['duracao']
@@ -196,6 +198,7 @@ def form_turma():
     return render_template('turma/form.html', turma=None, cursos=cursos, professores=professores)
 
 @app.route('/turma/salvar/', methods=['POST'])
+@app.route('/turma/salvar/<int:id>', methods=['POST'])
 def salvar_turma(id=None):
     semestre = request.form['semestre']
     curso_id = request.form['curso_id']      # Alterado de 'curso' para 'curso_id'
