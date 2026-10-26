@@ -15,10 +15,33 @@ class TurmaDAO:
             conn = get_connection()
             cursor = conn.cursor()
             try:
-                cursor.execute('INSERT INTO turma (semestre, curso_id, professor_id) VALUES (%s, %s, %s)', (semestre, curso_id, professor_id))
+                if id:
+                    cursor.execute('UPDATE turma SET semestre = %s, curso_id = %s, professor_id = %s WHERE id=%s', (semestre, curso_id, professor_id, id))
+                else:
+                    cursor.execute('INSERT INTO turma (semestre, curso_id, professor_id) VALUES (%s, %s, %s)', (semestre, curso_id, professor_id))
                 conn.commit()
                 return {"status": "ok"}
             except Exception as e:
                 return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
             finally:
                 conn.close()
+    
+    def buscar_por_id(self, id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, semestre, curso_id, professor_id FROM turma WHERE id=%s', (id,))
+        registro = cursor.fetchone() # retorna o registro selecionado
+        conn.close()
+        return registro
+    
+    def remover (self, id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute('DELETE FROM turma WHERE id = %s', (id,))
+            conn.commit()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "erro", "mensagem": f"Erro: {str(e)}"}
+        finally:
+             conn.close()

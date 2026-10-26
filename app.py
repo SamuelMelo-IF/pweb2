@@ -135,6 +135,23 @@ def salvar_professor(id=None):
         flash(resultado["mensagem"], "danger")
     return redirect('/professor')
 
+@app.route('/professor/editar/<int:id>')
+def editar_professor(id):
+    dao = ProfessorDAO()
+    professor = dao.buscar_por_id(id)
+    return render_template('professor/form.html', professor=professor)
+
+@app.route("/professor/remover/<int:id>")
+def remover_professor(id):
+    dao = ProfessorDAO()
+    resultado = dao.remover (id)
+    if resultado ["status"] == "ok":
+        flash("Professor excluído com sucesso!", "danger")
+    else:
+        flash (resultado ["mensagem"], "danger")
+    return redirect('/professor')
+
+
 @app.route('/curso/form')
 def form_curso():
     return render_template('curso/form.html', curso=None)
@@ -150,6 +167,23 @@ def salvar_curso(id=None):
     else:
         flash(resultado["mensagem"], "danger")
     return redirect('/curso')
+
+@app.route('/curso/editar/<int:id>')
+def editar_curso(id):
+    dao = CursoDAO()
+    curso = dao.buscar_por_id(id)
+    return render_template('curso/form.html', curso=curso)
+
+@app.route("/curso/remover/<int:id>")
+def remover_curso(id):
+    dao = CursoDAO()
+    resultado = dao.remover (id)
+    if resultado ["status"] == "ok":
+        flash("Curso excluído com sucesso!", "danger")
+    else:
+        flash (resultado ["mensagem"], "danger")
+    return redirect('/curso')
+
 
 @app.route('/turma/form')
 def form_turma():
@@ -175,6 +209,23 @@ def salvar_turma(id=None):
     else:
         flash(resultado["mensagem"], "danger")
     return redirect('/turma')
+
+@app.route('/turma/editar/<int:id>')
+def editar_turma(id):
+    dao = TurmaDAO()
+    turma = dao.buscar_por_id(id)
+    return render_template('turma/form.html', turma=turma)
+
+@app.route("/turma/remover/<int:id>")
+def remover_turma(id):
+    dao = TurmaDAO()
+    resultado = dao.remover (id)
+    if resultado ["status"] == "ok":
+        flash("Turma excluída com sucesso!", "danger")
+    else:
+        flash (resultado ["mensagem"], "danger")
+    return redirect('/turma')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
