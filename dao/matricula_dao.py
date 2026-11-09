@@ -4,18 +4,19 @@ from dao.db_config import get_connection
 class MatriculaDAO:
 
     
+    
     def listar(self):
         conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute('''
-            SELECT matricula.id, aluno.nome, curso.nome_curso,
-                turma.semestre, professor.nome
+            SELECT matricula.id, turma.semestre, aluno.nome,
+                curso.nome_curso, professor.nome
             FROM matricula
             JOIN aluno ON matricula.aluno_id = aluno.id
             JOIN curso ON matricula.curso_id = curso.id
-            JOIN turma ON matricula.turma_id = turma.id
-            JOIN professor ON turma.professor_id = professor.id
+            LEFT JOIN turma ON matricula.turma_id = turma.id
+            LEFT JOIN professor ON turma.professor_id = professor.id
             ORDER BY matricula.id DESC
         ''')
 
@@ -24,6 +25,7 @@ class MatriculaDAO:
         conn.close()
 
         return lista
+
 
     def salvar(self, id, aluno_id, curso_id):
         conn = get_connection()

@@ -14,9 +14,9 @@
         <thead class="table-dark">
             <tr>
                 <th>Matrícula</th>
+                <th>Semestre</th>
                 <th>Nome do Aluno</th>
                 <th>Curso</th>
-                <th>Semestre</th>
                 <th>Professor</th>
                 <th>Ação</th>
             </tr>
@@ -28,10 +28,10 @@
 
             <tr>
                 <td>{{ item[0] }}</td>
-                <td>{{ item[1] }}</td>
+                <td>{{ item[1] or '-' }}</td>
                 <td>{{ item[2] }}</td>
                 <td>{{ item[3] }}</td>
-                <td>{{ item[4] }}</td>
+                <td>{{ item[4] or '-' }}</td>
 
                 <td>
                     <a href="/matricula/editar/{{ item[0] }}"
