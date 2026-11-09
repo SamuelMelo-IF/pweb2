@@ -1,8 +1,9 @@
 {% include 'dashboard/cabecalho.html' %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Listagem de Matrículas</h1>
-    <a href="/matricula/form" class="btn btn-primary">Nova</a>
+<h1 class="mb-4">Listagem de Matrículas</h1>
+
+<div class="mb-4">
+    <a href="/matricula/form" class="btn btn-primary">Novo</a>
 </div>
 
 <div class="row">
@@ -29,6 +30,7 @@
                 <td>{{ matricula[5] }}</td>
                 <td class="d-flex gap-1">
                     <a href="/matricula/editar/{{ matricula[0] }}" class="btn btn-primary btn-sm">Editar</a>
+
                     <form action="/matricula/remover/{{ matricula[0] }}" method="POST"
                           onsubmit="return confirm('Tem certeza que deseja remover este registro?');">
                         <button type="submit" class="btn btn-danger btn-sm">Remover</button>

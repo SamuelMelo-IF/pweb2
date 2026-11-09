@@ -319,6 +319,17 @@ def remover_matricula(id):
 
     return redirect('/matricula')
 
+@app.route('/matricula/remover/<int:id>', methods=['POST'])
+def remover_matricula(id):
+    resultado = matricula_dao.remover(id)
+
+    if resultado["status"] == "ok":
+        flash("Matrícula removida com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+
+    return redirect('/matricula')
+
 
 # OUTRAS ROTAS
 
