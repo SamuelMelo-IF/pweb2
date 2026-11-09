@@ -6,14 +6,20 @@ class TurmaDAO:
 
     def listar(self):
         conn = get_connection()
-        cursor = conn.cursor('''
-        SELECT turma.id, turma.semestre, curso.nome_curso, professor.nome, professor.disciplina
-        FROM turma
-        JOIN curso ON turma.curso_id = curso.id
-        JOIN professor ON turma.professor_id = professor.id ORDER BY turma.id DESC
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT turma.id, turma.semestre, curso.nome_curso, professor.nome, professor.disciplina
+            FROM turma
+            JOIN curso ON turma.curso_id = curso.id
+            JOIN professor ON turma.professor_id = professor.id
+            ORDER BY turma.id DESC
         ''')
-        cursor.execute(self.sqlSelect)
+
         lista = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
         return lista
     
 
