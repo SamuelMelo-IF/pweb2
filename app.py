@@ -189,43 +189,44 @@ def remover_curso(id):
 
 @app.route('/turma/form')
 def form_turma():
-    curso_dao = CursoDAO()
-    professor_dao = ProfessorDAO()
-    
-    cursos = curso_dao.listar()
-    professores = professor_dao.listar()
-    
-    return render_template('turma/form.html', turma=None, cursos=cursos, professores=professores)
+    lista_professores = ProfessorDAO().listar()
+    lista_cursos = CursoDAO().listar()
+    return render_template('turma/form.html',
+                           turma=None,
+                           lista_professores=lista_professores,
+                           lista_cursos=lista_cursos)
 
 @app.route('/turma/salvar/', methods=['POST'])
 @app.route('/turma/salvar/<int:id>', methods=['POST'])
 def salvar_turma(id=None):
+
     semestre = request.form['semestre']
-    curso_id = request.form['curso_id']      # Alterado de 'curso' para 'curso_id'
-    professor_id = request.form['professor_id']  # Alterado de 'professor' para 'professor_id'
-    
+    curso_id = request.form['curso_id']
+    professor_id = request.form['professor_id']
+
     dao = TurmaDAO()
     resultado = dao.salvar(id, semestre, curso_id, professor_id)
-    
+
     if resultado["status"] == "ok":
-        flash("Turma salva com sucesso!", "success")
+        flash("Registro salvo com sucesso!", "success")
     else:
         flash(resultado["mensagem"], "danger")
+
     return redirect('/turma')
 
 
 @app.route('/turma/editar/<int:id>')
 def editar_turma(id):
+    lista_professores = ProfessorDAO().listar()
+    lista_cursos = CursoDAO().listar()
+
     dao = TurmaDAO()
     turma = dao.buscar_por_id(id)
 
-    curso_dao = CursoDAO()
-    professor_dao = ProfessorDAO()
-
-    cursos = curso_dao.listar()
-    professores = professor_dao.listar()
-
-    return render_template( 'turma/form.html', turma=turma, cursos=cursos, professores=professores)
+    return render_template('turma/form.html',
+                           turma=turma,
+                           lista_professores=lista_professores,
+                           lista_cursos=lista_cursos)
 
 @app.route("/turma/remover/<int:id>")
 def remover_turma(id):
