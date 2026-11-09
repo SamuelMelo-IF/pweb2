@@ -3,15 +3,19 @@ from dao.db_config import get_connection
 
 class MatriculaDAO:
 
+    
     def listar(self):
         conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute('''
-            SELECT matricula.id, aluno.nome, curso.nome_curso
+            SELECT matricula.id, aluno.nome, curso.nome_curso,
+                turma.semestre, professor.nome
             FROM matricula
             JOIN aluno ON matricula.aluno_id = aluno.id
             JOIN curso ON matricula.curso_id = curso.id
+            JOIN turma ON matricula.turma_id = turma.id
+            JOIN professor ON turma.professor_id = professor.id
             ORDER BY matricula.id DESC
         ''')
 
