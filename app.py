@@ -4,6 +4,7 @@ from dao.aluno_dao import AlunoDAO
 from dao.professor_dao import ProfessorDAO
 from dao.turma_dao import TurmaDAO
 from dao.curso_dao import CursoDAO
+from dao.matricula_dao import MatriculaDAO
 
 app = Flask(__name__)
 app.secret_key = "uma_chave_muito_secreta_e_unica"
@@ -237,6 +238,77 @@ def remover_turma(id):
     else:
         flash (resultado ["mensagem"], "danger")
     return redirect('/turma')
+
+
+
+@app.route('/matricula')
+def listar_matricula():
+    dao = MatriculaDAO()
+    lista = dao.listar()
+    return render_template('matricula/lista.html', lista=lista)
+
+
+@app.route('/matricula/form')
+def form_matricula():
+    lista_alunos = AlunoDAO().listar()
+    lista_cursos = CursoDAO().listar()
+
+    return render_template(
+        'matricula/form.html',
+        matricula=None,
+        lista_alunos=lista_alunos,
+        lista_cursos=lista_cursos
+    )
+
+
+@app.route('/matricula/salvar/', methods=['POST'])
+@app.route('/matricula/salvar/<int:id>', methods=['POST'])
+def salvar_matricula(id=None):
+
+    aluno_id = request.form['aluno_id']
+    curso_id = request.form['curso_id']
+
+    dao = MatriculaDAO()
+    resultado = dao.salvar(id, aluno_id, curso_id)
+
+    if resultado["status"] == "ok":
+        flash("Matrícula salva com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+
+    return redirect('/matricula')
+
+
+@app.route('/matricula/editar/<int:id>')
+def editar_matricula(id):
+
+    lista_alunos = AlunoDAO().listar()
+    lista_cursos = CursoDAO().listar()
+
+    dao = MatriculaDAO()
+    matricula = dao.buscar_por_id(id)
+
+    return render_template(
+        'matricula/form.html',
+        matricula=matricula,
+        lista_alunos=lista_alunos,
+        lista_cursos=lista_cursos
+    )
+
+
+@app.route('/matricula/remover/<int:id>')
+def remover_matricula(id):
+
+    dao = MatriculaDAO()
+    resultado = dao.remover(id)
+
+    if resultado["status"] == "ok":
+        flash("Matrícula excluída com sucesso!", "danger")
+    else:
+        flash(resultado["mensagem"], "danger")
+
+    return redirect('/matricula')
+
 
 
 if __name__ == '__main__':

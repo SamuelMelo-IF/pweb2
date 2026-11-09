@@ -1,0 +1,67 @@
+
+{% include 'dashboard/cabecalho.html' %}
+
+<h1 class="mb-4">Cadastrar Matrícula</h1>
+
+<div class="row">
+    <div class="col-12">
+
+        <form action="/matricula/salvar/{{ matricula[0] if matricula else '' }}" method="POST">
+
+            <!-- Aluno -->
+            <div class="mb-3">
+                <label for="aluno_id" class="form-label">Aluno</label>
+
+                <select name="aluno_id" id="aluno_id"
+                        class="form-select" required>
+
+                    <option value="">Selecione um aluno</option>
+
+                    {% for aluno in lista_alunos %}
+                        <option value="{{ aluno[0] }}"
+                            {% if matricula and aluno[0] == matricula[1] %}selected{% endif %}>
+                            {{ aluno[1] }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <!-- Curso -->
+            <div class="mb-3">
+                <label for="curso_id" class="form-label">Curso</label>
+
+                <select name="curso_id" id="curso_id"
+                        class="form-select" required>
+
+                    <option value="">Selecione um curso</option>
+
+                    {% for curso in lista_cursos %}
+                        <option value="{{ curso[0] }}"
+                            {% if matricula and curso[0] == matricula[2] %}selected{% endif %}>
+                            {{ curso[1] }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex gap-2">
+
+                <button type="submit" class="btn btn-primary">
+                    Salvar
+                </button>
+
+                <a href="/matricula" class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% include 'dashboard/rodape.html' %}
