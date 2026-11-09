@@ -35,8 +35,7 @@ def sobre():
 
 @app.route('/aluno')
 def listar_aluno():
-    dao = AlunoDAO()
-    lista = dao.listar()
+    lista = aluno_dao.listar()
     return render_template('aluno/lista.html', lista=lista)
 
 
@@ -52,8 +51,7 @@ def salvar_aluno(id=None):
     idade = request.form['idade']
     cidade = request.form['cidade']
 
-    dao = AlunoDAO()
-    resultado = dao.salvar(id, nome, idade, cidade)
+    resultado = aluno_dao.salvar(id, nome, idade, cidade)
 
     if resultado["status"] == "ok":
         flash("Aluno salvo com sucesso!", "success")
@@ -65,15 +63,13 @@ def salvar_aluno(id=None):
 
 @app.route('/aluno/editar/<int:id>')
 def editar_aluno(id):
-    dao = AlunoDAO()
-    aluno = dao.buscar_por_id(id)
+    aluno = aluno_dao.buscar_por_id(id)
     return render_template('aluno/form.html', aluno=aluno)
 
 
 @app.route('/aluno/remover/<int:id>')
 def remover_aluno(id):
-    dao = AlunoDAO()
-    resultado = dao.remover(id)
+    resultado = aluno_dao.remover(id)
 
     if resultado["status"] == "ok":
         flash("Aluno excluído com sucesso!", "danger")
@@ -87,8 +83,7 @@ def remover_aluno(id):
 
 @app.route('/professor')
 def lista_professor():
-    dao = ProfessorDAO()
-    lista = dao.listar()
+    lista = professor_dao.listar()
     return render_template('professor/lista.html', lista=lista)
 
 
@@ -103,8 +98,7 @@ def salvar_professor(id=None):
     nome = request.form['nome']
     disciplina = request.form['disciplina']
 
-    dao = ProfessorDAO()
-    resultado = dao.salvar(id, nome, disciplina)
+    resultado = professor_dao.salvar(id, nome, disciplina)
 
     if resultado["status"] == "ok":
         flash("Professor salvo com sucesso!", "success")
@@ -116,15 +110,13 @@ def salvar_professor(id=None):
 
 @app.route('/professor/editar/<int:id>')
 def editar_professor(id):
-    dao = ProfessorDAO()
-    professor = dao.buscar_por_id(id)
+    professor = professor_dao.buscar_por_id(id)
     return render_template('professor/form.html', professor=professor)
 
 
 @app.route('/professor/remover/<int:id>')
 def remover_professor(id):
-    dao = ProfessorDAO()
-    resultado = dao.remover(id)
+    resultado = professor_dao.remover(id)
 
     if resultado["status"] == "ok":
         flash("Professor excluído com sucesso!", "danger")
@@ -138,8 +130,7 @@ def remover_professor(id):
 
 @app.route('/curso')
 def listar_curso():
-    dao = CursoDAO()
-    lista = dao.listar()
+    lista = curso_dao.listar()
     return render_template('curso/lista.html', lista=lista)
 
 
@@ -154,8 +145,7 @@ def salvar_curso(id=None):
     nome = request.form['nome']
     duracao = request.form['duracao']
 
-    dao = CursoDAO()
-    resultado = dao.salvar(id, nome, duracao)
+    resultado = curso_dao.salvar(id, nome, duracao)
 
     if resultado["status"] == "ok":
         flash("Curso salvo com sucesso!", "success")
@@ -167,15 +157,13 @@ def salvar_curso(id=None):
 
 @app.route('/curso/editar/<int:id>')
 def editar_curso(id):
-    dao = CursoDAO()
-    curso = dao.buscar_por_id(id)
+    curso = curso_dao.buscar_por_id(id)
     return render_template('curso/form.html', curso=curso)
 
 
 @app.route('/curso/remover/<int:id>')
 def remover_curso(id):
-    dao = CursoDAO()
-    resultado = dao.remover(id)
+    resultado = curso_dao.remover(id)
 
     if resultado["status"] == "ok":
         flash("Curso excluído com sucesso!", "danger")
@@ -189,15 +177,14 @@ def remover_curso(id):
 
 @app.route('/turma')
 def listar_turma():
-    dao = TurmaDAO()
-    lista = dao.listar()
+    lista = turma_dao.listar()
     return render_template('turma/lista.html', lista=lista)
 
 
 @app.route('/turma/form')
 def form_turma():
-    lista_professores = ProfessorDAO().listar()
-    lista_cursos = CursoDAO().listar()
+    lista_professores = professor_dao.listar()
+    lista_cursos = curso_dao.listar()
 
     return render_template(
         'turma/form.html',
@@ -214,8 +201,7 @@ def salvar_turma(id=None):
     curso_id = request.form['curso_id']
     professor_id = request.form['professor_id']
 
-    dao = TurmaDAO()
-    resultado = dao.salvar(id, semestre, curso_id, professor_id)
+    resultado = turma_dao.salvar(id, semestre, curso_id, professor_id)
 
     if resultado["status"] == "ok":
         flash("Registro salvo com sucesso!", "success")
@@ -227,11 +213,10 @@ def salvar_turma(id=None):
 
 @app.route('/turma/editar/<int:id>')
 def editar_turma(id):
-    lista_professores = ProfessorDAO().listar()
-    lista_cursos = CursoDAO().listar()
+    lista_professores = professor_dao.listar()
+    lista_cursos = curso_dao.listar()
 
-    dao = TurmaDAO()
-    turma = dao.buscar_por_id(id)
+    turma = turma_dao.buscar_por_id(id)
 
     return render_template(
         'turma/form.html',
@@ -243,8 +228,7 @@ def editar_turma(id):
 
 @app.route('/turma/remover/<int:id>')
 def remover_turma(id):
-    dao = TurmaDAO()
-    resultado = dao.remover(id)
+    resultado = turma_dao.remover(id)
 
     if resultado["status"] == "ok":
         flash("Turma excluída com sucesso!", "danger")
@@ -307,17 +291,6 @@ def salvar_matricula():
 
     return redirect('/matricula')
 
-
-@app.route('/matricula/remover/<int:id>')
-def remover_matricula(id):
-    resultado = matricula_dao.remover(id)
-
-    if resultado["status"] == "ok":
-        flash("Matrícula removida com sucesso!", "success")
-    else:
-        flash(resultado["mensagem"], "danger")
-
-    return redirect('/matricula')
 
 @app.route('/matricula/remover/<int:id>', methods=['POST'])
 def remover_matricula(id):
