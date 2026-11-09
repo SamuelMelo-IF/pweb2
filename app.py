@@ -297,7 +297,7 @@ def remover_matricula(id):
     resultado = matricula_dao.remover(id)
 
     if resultado["status"] == "ok":
-        flash("Matrícula removida com sucesso!", "success")
+        flash("Matrícula removida com sucesso!", "danger")
     else:
         flash(resultado["mensagem"], "danger")
 
